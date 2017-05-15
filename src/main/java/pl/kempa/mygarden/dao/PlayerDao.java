@@ -1,9 +1,9 @@
 package pl.kempa.mygarden.dao;
 
-import pl.kempa.mygarden.model.User;
+import pl.kempa.mygarden.model.Player;
 
-public interface UserDaoInterface {
-	public void register(User user);
-	public User getUserByUsername(String username);
+public interface PlayerDao {
+	public void register(Player Player);
+	public Player getUserByUsername(String username);
 	
 }

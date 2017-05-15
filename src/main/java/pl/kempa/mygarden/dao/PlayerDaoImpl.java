@@ -9,32 +9,32 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.kempa.mygarden.model.User;
+import pl.kempa.mygarden.model.Player;
 @Repository
 @Transactional
-public class UserDao implements UserDaoInterface {
+public class PlayerDaoImpl implements PlayerDao {
 	@PersistenceContext	
 	private EntityManager entityManager;
 	
 
 	
     @Override
-	public void register(User user) {
+	public void register(Player user) {
 		entityManager.persist(user);
 	}
 	@Override
-	 public User getUserByUsername(String username) {
+	 public Player getUserByUsername(String username) {
 		
-		String hql = "FROM User  WHERE username = :un";
+		String hql = "FROM Player  WHERE username = :username";
 		  Query query = entityManager
 				.createQuery(hql)
-				.setParameter("un", username);
-		  User usr= (User) query.getSingleResult();
+				.setParameter("username", username);
+		  Player usr= (Player) query.getSingleResult();
 
 		 return  usr;
 	}
-	public User getUserById(int id) {
-	    return entityManager.find(User.class, id);
+	public Player getUserById(int id) {
+	    return entityManager.find(Player.class, id);
 	}
 
 
