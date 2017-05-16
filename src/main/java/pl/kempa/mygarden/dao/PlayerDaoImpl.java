@@ -2,9 +2,12 @@ package pl.kempa.mygarden.dao;
 
 
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,15 @@ public class PlayerDaoImpl implements PlayerDao {
 	}
 	public Player getUserById(int id) {
 	    return entityManager.find(Player.class, id);
+	}
+	public List<Player> getAllUsers() {
+		//List players = null;
+		String hql = "FROM Player";
+		  TypedQuery<Player> query = entityManager
+				.createQuery(hql,Player.class);
+		  List<Player> usrs= query.getResultList();
+
+		 return  usrs;
 	}
 
 

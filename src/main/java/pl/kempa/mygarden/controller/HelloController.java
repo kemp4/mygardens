@@ -3,6 +3,8 @@ package pl.kempa.mygarden.controller;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pl.kempa.mygarden.dao.PlayerDaoImpl;
 import pl.kempa.mygarden.model.Player;
 
-@Controller
+
 public class HelloController {
 	
 
@@ -36,6 +38,18 @@ public class HelloController {
 	public String signup(Map<String, Object> model) {
 		return "signup";
 	}
+	@RequestMapping("/ranking2")
+	public String ranking(Map<String, Object> model) {
+		List<Player> players= userdao.getAllUsers();
+		
+		model.put("players", players);
+		return "ranking";
+	}
+	  @RequestMapping("/signin-error.html")
+	  public String loginError(Map<String, Object> model) {
+	    model.put("loginError", true);
+	    return "signin.html";
+	  }
 	@RequestMapping(value="/login2",method = RequestMethod.POST)
 	public String login(@RequestParam(value = "username") String login
     		,@RequestParam(value = "password")String pass,Map<String, Object> model) {

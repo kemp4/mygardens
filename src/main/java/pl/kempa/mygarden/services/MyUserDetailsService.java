@@ -12,7 +12,7 @@ import pl.kempa.mygarden.dao.PlayerDaoImpl;
 import pl.kempa.mygarden.model.Player;
 
 
-@Service("userDetailsService")
+//@Service("userDetailsService")
 public class MyUserDetailsService implements UserDetailsService {
 
 
