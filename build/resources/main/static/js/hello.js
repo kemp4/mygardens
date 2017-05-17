@@ -31,9 +31,7 @@ angular.module('hello', ['ngRoute'])
 	var newuser;
 	var self = this;
 	self.register = function(){
-		var param = {newuser:self.newuser};
-	
-		$http.post('/ws/register', param).then(function(response) {
+		$http.post('/ws/register', {newuser}).then(function(response) {
 			self.regstatus = response.data;
 		})
 	};

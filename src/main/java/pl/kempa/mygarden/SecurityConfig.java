@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import pl.kempa.mygarden.services.MyUserDetailsService;
@@ -27,15 +28,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .httpBasic()
       .and()
         .authorizeRequests()
-          .antMatchers("/index.html", "/home.html", "/login.html", "/").permitAll()
-          .anyRequest().authenticated();
+          .antMatchers("/index.html", "/home.html", "/login.html", "/","/register.html","/ws/register").permitAll()
+          .anyRequest().authenticated()
+          .and()
+          .csrf()
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+      ;
     }
   
 	
 	
-//		@Autowired
-//		@Qualifier("userDetailsService")
-//		MyUserDetailsService userDetailsService;
+		@Autowired
+		@Qualifier("userDetailsService")
+		MyUserDetailsService userDetailsService;
 //
 //
 //	@Override
@@ -63,10 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //			}
 //		});
 //	}
-//	    @Autowired
-//	    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//	    	auth.userDetailsService(userDetailsService);
-//	    }
+	    @Autowired
+	    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	    	auth.userDetailsService(userDetailsService);
+	    }
 	    
 //		@Bean
 //		public PasswordEncoder passwordEncoder(){

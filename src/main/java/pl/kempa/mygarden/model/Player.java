@@ -3,6 +3,7 @@ package pl.kempa.mygarden.model;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -17,18 +18,22 @@ public class Player implements UserDetails{
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
-	@Column(unique=true)
+	@Column(unique=true,nullable=false)
 	String username;
-	@Column(unique=true)
+	@Column(unique=true,nullable=false)
 	String email;
+	@Column(nullable=false)
 	String password;
-	String creationDate;
+	Date creationDate;
+
+
 	int gold;
 	int seeds;
 	
 	public Player(){
 		this.gold=100;
 		this.seeds=0;
+		this.setCreationDate(new Date());
 	}
 	
 	
@@ -59,12 +64,7 @@ public class Player implements UserDetails{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCreationDate() {
-		return creationDate;
-	}
-	public void setCreationDate(String creationDate) {
-		this.creationDate = creationDate;
-	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -82,6 +82,12 @@ public class Player implements UserDetails{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	@Override

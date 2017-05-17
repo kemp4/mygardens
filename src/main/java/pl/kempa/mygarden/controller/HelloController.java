@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pl.kempa.mygarden.dao.PlayerDaoImpl;
 import pl.kempa.mygarden.model.Player;
 
-@Controller
+//@Controller
 public class HelloController {
 	
 

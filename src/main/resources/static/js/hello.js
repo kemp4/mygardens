@@ -1,4 +1,7 @@
 angular.module('hello', ['ngRoute'])
+.config(['$locationProvider', function($locationProvider) {
+	$locationProvider.hashPrefix('');
+}])
 .config(function($routeProvider, $httpProvider) {
 
 	$routeProvider.when('/', {
@@ -8,6 +11,10 @@ angular.module('hello', ['ngRoute'])
 	}).when('/login', {
 		templateUrl : 'login.html',
 		controller : 'navigation',
+		controllerAs: 'controller'
+	}).when('/register', {
+		templateUrl : 'register.html',
+		controller : 'register',
 		controllerAs: 'controller'
 	}).otherwise('/');
 
@@ -19,6 +26,19 @@ angular.module('hello', ['ngRoute'])
 	$http.get('/resource').then(function(response) {
 		self.greeting = response.data;
 	})
+})
+.controller('register', function($http) {
+	var newuser;
+	var self = this;
+	self.register = function(){
+		var param = {newuser:self.newuser};
+	
+		$http.post('/ws/register', param).then(function(response) {
+			self.regstatus = response.data;
+		})
+	};
+	
+
 })
 .controller('navigation',
 
