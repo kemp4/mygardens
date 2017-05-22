@@ -8,6 +8,10 @@ angular.module('hello', ['ngRoute'])
 		templateUrl : 'home.html',
 		controller : 'home',
 		controllerAs: 'controller'
+	}).when('/buildings', {
+		templateUrl : 'buildings.html',
+		controller : 'buildings',
+		controllerAs: 'controller'
 	}).when('/login', {
 		templateUrl : 'login.html',
 		controller : 'navigation',
@@ -32,20 +36,31 @@ angular.module('hello', ['ngRoute'])
 	var self = this;
 	self.register = function(){
 		var param = {newuser:self.newuser};
-	
+
 		$http.post('/ws/register', param).then(function(response) {
 			self.regstatus = response.data;
+			//TODO success/failure info
 		})
 	};
-	
+})
+.controller('buildings', function($http,$rootScope) {
+
+	var self = this;
+	self.buy = function(){
+		var cost = {cost:10};
+		$http.post('buy', cost).then(function(response) {
+			self.buyinfo = response.data;
+			$http.post('getplayergold').then(function(response) {
+					$rootScope.goldamount = response.data.goldAmount;
+			});
+		})
+	}
 
 })
 .controller('navigation',
 
 		function($rootScope, $http, $location) {
-
 	var self = this
-
 	var authenticate = function(credentials, callback) {
 
 		var headers = credentials ? {authorization : "Basic "
@@ -55,6 +70,9 @@ angular.module('hello', ['ngRoute'])
 		$http.get('user', {headers : headers}).then(function(response) {
 			if (response.data.name) {
 				$rootScope.authenticated = true;
+				//
+				$rootScope.goldamount = response.data.principal.gold;
+				//
 			} else {
 				$rootScope.authenticated = false;
 			}

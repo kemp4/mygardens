@@ -13,6 +13,8 @@ import pl.kempa.mygarden.model.Player;
 @Repository
 @Transactional
 public class PlayerDaoImpl implements PlayerDao {
+	
+
 	@PersistenceContext	
 	private EntityManager entityManager;
 	

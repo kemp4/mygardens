@@ -1,0 +1,12 @@
+<h1>Greexcvdgting</h1>
+<div ng-show="authenticated">
+<p> here u will see yorurrrr buildings</p>
+    	<a href="" ng-click="controller.buy()"><button type="submit" class="btn btn-primary">Buy something :) [10gold]</button></a>
+		<div class="alert alert-danger ng-hide" ng-show="(controller.buyinfo.success=='false')">{{controller.buyinfo.message}}</div>
+		<div class="alert alert-success ng-hide" ng-show="(controller.buyinfo.success=='true')">{{controller.buyinfo.message}}</div>
+</div>
+<div  ng-show="!authenticated">
+    <p>you have to be logged in to see your buildingss</p>
+
+
+</div>

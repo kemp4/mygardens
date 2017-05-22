@@ -4,37 +4,65 @@ package pl.kempa.mygarden.model;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import pl.kempa.mygarden.model.gameObjects.Building;
+
+
+//
+@Component
+@Scope("session")
 @Entity
+//@Table(name = "player_category")
 public class Player implements UserDetails{
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int id;
-	@Column(unique=true,nullable=false)
-	String username;
-	@Column(unique=true,nullable=false)
-	String email;
-	@Column(nullable=false)
-	String password;
-	Date creationDate;
+	private int id;
 
+	private String username;
 
-	int gold;
-	int seeds;
+	private String email;
+
+	private String password;
+	private Date creationDate;
+
+	private int gold;
+	private int seeds;
+	private boolean success;
+	 @OneToMany(mappedBy = "ownplayer", cascade = CascadeType.ALL)
+	 @JsonIgnore // temporary
+    private Set<Building> buildings;
 	
 	public Player(){
 		this.gold=100;
 		this.seeds=0;
 		this.setCreationDate(new Date());
 	}
+	
+   
+    public Set<Building> getBuildings() {
+        return buildings;
+    }
+
+    public void setBuildings(Set<Building> books) {
+        this.buildings = books;
+    }
 	
 	
 	public int getGold() {
@@ -50,7 +78,7 @@ public class Player implements UserDetails{
 		this.seeds = seeds;
 	}
 
-	boolean success;
+
 	
 	public boolean isSuccess() {
 		return success;
@@ -58,6 +86,7 @@ public class Player implements UserDetails{
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
+
 	public int getId() {
 		return id;
 	}
